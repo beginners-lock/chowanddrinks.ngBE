@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(chowanddrinks.ng) Payment Confirmation</title>
+    <style>
+        @font-face {
+            font-family:'Rubik Bold';
+            src: url('public/fonts/Rubik-Bold.ttf');
+        }
+
+        @font-face {
+            font-family:'Rubik Regular';
+            src: url('public/fonts/Rubik-Regular.ttf');
+        }
+
+        html, body{ 
+            height:100vh; width:100vw; box-sizing:border-box; display:flex; flex-direction:column; 
+            align-items:center; justify-content:center; 
+        }
+        #rtext{
+            font-family:'Rubik Bold'; text-align:center; font-size:20px; color:#F00000;
+        }
+
+        #rbtn{ 
+            width:auto; height:auto; font-size:16px; margin-top:20px;
+            display:flex; flex-direction:row; align-items:center; justify-content:center;
+            color:white; background-color:#F00000; border-radius:10px; padding:15px 50px; 
+            box-sizing:border-box; cursor:pointer; font-family:'Rubik Regular';
+        }
+
+    </style>
+</head>
+<body>
+    <div id="rtext">Successful payment!</div>
+    <div id="rbtn" onclick='redirect();'>
+        Return to chowanddrinks.ng
+    </div>
+    <script>
+        function redirect(){
+            alert(localStorage.length);
+            fetch("http:\\\\localhost:8000\\updateorder",
+                {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        order: JSON.parse(localStorage.getItem('cadngorder'))
+                    })
+                }
+            ).then(response=>{ return response.json(); }).then((response)=>{
+                window.location.href = "http:\\\\localhost:3000";
+            });
+        }
+    </script>    
+</body>
+</html>
