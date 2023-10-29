@@ -46,6 +46,7 @@ model Menu{
 	name		String
 	price		Int
 	category	String
+	image		String
 }
 
 model EmailVerification{

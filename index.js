@@ -381,7 +381,7 @@ app.post('/paymenthook', bodyParser.json(), async (req, res)=>{
             //Send email
             let urlstring = process.env.BACKEND_URL+'/orderreview?reference='+paystack.data.reference+'&userid='+usermeta.userid;
             console.log(urlstring);
-            sendOrderEmail(urlstring);
+            sendOrderEmail(urlstring, usermeta.email);
         }else{
             //Update prisma db
             let action1 = await prisma.order.updateMany({
@@ -466,22 +466,23 @@ function orderTableGen(arr, address){
     return html;
 }
 
-async function sendOrderEmail(link){
+async function sendOrderEmail(link, email){
     try{    
         let api = new ElasticEmail.EmailsApi()
 
         let message = ElasticEmail.EmailMessageData.constructFromObject({
             Recipients: [
-                new ElasticEmail.EmailRecipient('billings@chowanddrinks.com.ng')
+                new ElasticEmail.EmailRecipient('billings@chowanddrinks.com.ng'),
+                new ElasticEmail.EmailRecipient(email)
             ],
             Content: {
                 Body: [
                     ElasticEmail.BodyPart.constructFromObject({
                         ContentType: "HTML",
-                        Content: "<html><a href='"+link+"'>"+link+"</a></html>"
+                        Content: "<html><a href='"+link+"'>Order Invoice</a></html>"
                     })
                 ],
-                Subject: "chowanddrinks.ng Order Alert",
+                Subject: "chowanddrinks.ng Order Invoice",
                 From: "billings@chowanddrinks.com.ng"
             }
         });
