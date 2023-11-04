@@ -294,7 +294,7 @@ app.post('/makepayment', bodyParser.json(), async (req, res)=>{
         console.log('//amount: '+req.body.email);
         const params = JSON.stringify({
             "email": req.body.email,
-            "amount": /*req.body.amount*100*/500,
+            "amount": req.body.amount*100,//500,
             "callback_url": process.env.FRONTEND_URL,
             "metadata": JSON.stringify({userid: req.body.userid, email: req.body.email})
         });
