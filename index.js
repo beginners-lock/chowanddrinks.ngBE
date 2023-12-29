@@ -25,8 +25,6 @@ app.use('/public', express.static('public'));
 //app.use(express.urlencoded({ extended: true})); //For parsing application/x-www-form-urlencoded
 app.use(cors({origin: "*"}));
 
-const CATEGORIES = ['Rice', 'Pasta', 'Beans', 'Tubers', 'Nigerian Staples', 'Nigerian Soups', 'Stew & Sauce', 'Proteins', 'Finger Foods', 'Side Dish', 'Malt'];
-
 app.post('/usercreate', bodyParser.json(), async (req, res)=>{
     console.log('create');
     try{
